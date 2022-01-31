@@ -12,9 +12,8 @@ class Game
 
   def play
     code = create_code
-    p code
     12.times do
-      print 'Enter a four digit code: '
+      print 'Enter a four digit code, numbers between 1 and 6: '
       guess = gets.chomp
       return if guess == 'q'
 
@@ -45,11 +44,14 @@ class Game
   end
 
   def give_feedback(guess, code)
-    correct_numbers = 0
-    guess.chars.each do |element|
-      correct_numbers += 1 if code.chars.include?(element)
+    correct_digits = 0
+    correct_spots = 0
+    guess.chars.each_with_index do |element, i|
+      correct_digits += 1 if guess.chars.sort[i] == code.chars.sort[i]
+      correct_spots += 1 if code.chars[i] == element
     end
-    puts "You got #{correct_numbers} digits correct."
+    puts "#{correct_digits} digits are correct."
+    puts "#{correct_spots} digits in the correct spots."
   end
 
   def new_game
